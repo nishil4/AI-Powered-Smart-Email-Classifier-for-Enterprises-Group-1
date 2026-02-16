@@ -1,5 +1,13 @@
+<<<<<<< HEAD
 streamlit
 pandas
 numpy
 scikit-learn
 plotly
+=======
+streamlit
+pandas
+numpy
+scikit-learn
+plotly
+>>>>>>> 225523f2f4667903f6db7ff650d61bf1228d4cb7
