@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # 📧 AI-Powered Smart Email Intelligence System
 
 ## 🚀 Project Overview
@@ -94,7 +93,9 @@ The Streamlit dashboard includes:
 ---
 
 ## 📂 Project Structure
+
 =======
+
 # 📧 AI-Powered Smart Email Intelligence System
 
 ## 🚀 Project Overview
@@ -188,6 +189,3 @@ The Streamlit dashboard includes:
 - Pickle (Model Serialization)
 
 ---
-
-## 📂 Project Structure
->>>>>>> 225523f2f4667903f6db7ff650d61bf1228d4cb7
