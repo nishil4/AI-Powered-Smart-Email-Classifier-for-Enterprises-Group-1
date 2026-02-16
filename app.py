@@ -38,18 +38,6 @@ df = pd.read_csv("clean_train.csv")
 df["date"] = pd.date_range(start="2024-01-01", periods=len(df), freq="H")
 
 # -----------------------
-# Mail ID Selection
-# -----------------------
-
-if "mail_id" in df.columns:
-    selected_mail = st.sidebar.selectbox(
-        "📧 Select Mail ID",
-        options=df["mail_id"].unique()
-    )
-
-    df = df[df["mail_id"] == selected_mail]
-
-# -----------------------
 # Sidebar Filters
 # -----------------------
 st.sidebar.title("🔎 Filters")
