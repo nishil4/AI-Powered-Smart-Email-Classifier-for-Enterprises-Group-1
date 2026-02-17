@@ -30,9 +30,24 @@ vectorizer = pickle.load(open("vectorizer.pkl", "rb"))
 urgency_model = pickle.load(open("urgency_model.pkl", "rb"))
 
 # -----------------------
+# Business Category Mapping
+# -----------------------
+category_mapping = {
+    "spam": "Spam",
+    "promotions": "Feedback",
+    "social_media": "Feedback",
+    "forum": "Complaints",
+    "verify_code": "Requests",
+    "updates": "Requests"
+}
+
+# -----------------------
 # Load Data
 # -----------------------
 df = pd.read_csv("clean_train.csv")
+
+# Convert dataset categories to business categories
+df["category"] = df["category"].map(category_mapping).fillna(df["category"])
 
 # Dummy Date Column (for demo)
 df["date"] = pd.date_range(start="2024-01-01", periods=len(df), freq="H")
@@ -148,7 +163,9 @@ if st.button("Classify Email"):
         processed_text = user_input.lower()
         vectorized = vectorizer.transform([processed_text])
         
-        category_pred = model.predict(vectorized)[0]
+        raw_category = model.predict(vectorized)[0]
+        category_pred = category_mapping.get(raw_category, raw_category)
+
         urgency_pred = urgency_model.predict(vectorized)[0]
         
         st.success(f"Predicted Category: {category_pred}")
