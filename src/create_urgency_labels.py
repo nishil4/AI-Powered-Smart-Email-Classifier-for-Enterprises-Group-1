@@ -1,14 +1,26 @@
 import pandas as pd
-from datasets import load_dataset
 from urgency_rule_based import detect_urgency_rule
 
-dataset = load_dataset("jason23322/high-accuracy-email-classifier")
+# -----------------------------
+# Load cleaned datasets
+# -----------------------------
+train_df = pd.read_csv("data/processed/train_clean.csv")
+test_df = pd.read_csv("data/processed/test_clean.csv")
 
-train_df = pd.DataFrame(dataset["train"])
+print("Datasets loaded successfully")
 
-# Create urgency column
-train_df["urgency"] = train_df["text"].apply(detect_urgency_rule)
+# -----------------------------
+# Create urgency labels
+# -----------------------------
+train_df["urgency"] = train_df["clean_text"].apply(detect_urgency_rule)
+test_df["urgency"] = test_df["clean_text"].apply(detect_urgency_rule)
 
+print("Urgency labels generated")
+
+# -----------------------------
+# Save datasets
+# -----------------------------
 train_df.to_csv("data/processed/train_with_urgency.csv", index=False)
+test_df.to_csv("data/processed/test_with_urgency.csv", index=False)
 
-print("Urgency labels created successfully.")
+print("✅ Urgency datasets saved successfully")

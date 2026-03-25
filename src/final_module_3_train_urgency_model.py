@@ -5,16 +5,12 @@ from sklearn.metrics import classification_report, accuracy_score
 import pickle
 
 # -----------------------------
-# Load Train & Test datasets
+# Load Dataset
 # -----------------------------
-train_df = pd.read_csv("data/processed/train_with_urgency.csv")
-test_df = pd.read_csv("data/processed/test_with_urgency.csv")
+df = pd.read_csv("data/processed/module3_final_train_output.csv")
 
-X_train = train_df["clean_text"]
-y_train = train_df["urgency"]
-
-X_test = test_df["clean_text"]
-y_test = test_df["urgency"]
+X = df["text"]
+y = df["urgency"]
 
 # -----------------------------
 # TF-IDF Vectorization
@@ -24,8 +20,7 @@ vectorizer = TfidfVectorizer(
     stop_words="english"
 )
 
-X_train_tfidf = vectorizer.fit_transform(X_train)
-X_test_tfidf = vectorizer.transform(X_test)
+X_tfidf = vectorizer.fit_transform(X)
 
 # -----------------------------
 # Logistic Regression Model
@@ -35,17 +30,20 @@ model = LogisticRegression(
     class_weight="balanced"
 )
 
-model.fit(X_train_tfidf, y_train)
+model.fit(X_tfidf, y)
+
+# -----------------------------
+# Prediction
+# -----------------------------
+y_pred = model.predict(X_tfidf)
 
 # -----------------------------
 # Evaluation
 # -----------------------------
-y_pred = model.predict(X_test_tfidf)
-
-print("\nTest Accuracy:", accuracy_score(y_test, y_pred))
+print("\nAccuracy:", accuracy_score(y, y_pred))
 
 print("\nClassification Report:\n")
-print(classification_report(y_test, y_pred))
+print(classification_report(y, y_pred))
 
 # -----------------------------
 # Save Model
@@ -53,4 +51,4 @@ print(classification_report(y_test, y_pred))
 pickle.dump(model, open("models/urgency_model.pkl", "wb"))
 pickle.dump(vectorizer, open("models/urgency_vectorizer.pkl", "wb"))
 
-print("\n Urgency model saved successfully.")
+print("\nUrgency model saved successfully.")
